@@ -27,4 +27,12 @@ rm(trainingDF, testDF)
 # Setting columns names
 names(allDF) <- featuresDF[[2]]
 
-### Extracts only the measurements on the mean and standard deviation for each measurement.
+### Extracting only the measurements on the mean and standard deviation for each measurement.
+
+# What columns have means and standard deviations?
+colsMeansStd <- grep('mean|std', names(allDF))
+
+# Keeping just these columns
+allDF <- allDF[colsMeansStd]
+
+### Using descriptive activity names to name the activities in the data set
