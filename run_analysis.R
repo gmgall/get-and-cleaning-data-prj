@@ -15,14 +15,20 @@ if(!file.exists("UCI HAR Dataset")){
 
 # Reading files
 trainingDF <- read.table("./UCI HAR Dataset/train/X_train.txt")
+trainingActDF <- read.table("./UCI HAR Dataset/train/y_train.txt", col.names = "activity")
+
 testDF <- read.table("./UCI HAR Dataset/test/X_test.txt")
+testActDF <- read.table("./UCI HAR Dataset/test/y_test.txt", col.names = "activity")
+
 featuresDF <- read.table("./UCI HAR Dataset/features.txt", stringsAsFactors = FALSE)
+activityNamesDF <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 # Combining data sets
 allDF <- rbind(trainingDF, testDF)
+allActDf <- rbind(trainingActDF, testActDF)
 
 # Removing unnecessary intermediate data sets
-rm(trainingDF, testDF)
+rm(trainingDF, testDF, trainingActDF, testActDF)
 
 # Setting columns names
 names(allDF) <- featuresDF[[2]]
@@ -36,3 +42,8 @@ colsMeansStd <- grep('mean|std', names(allDF))
 allDF <- allDF[colsMeansStd]
 
 ### Using descriptive activity names to name the activities in the data set
+
+activityFactor <- activityNamesDF[allActDf$activity, 2]
+allDF <- cbind(activity=activityFactor, allDF)
+
+### Appropriately labeling the data set with descriptive variable names
