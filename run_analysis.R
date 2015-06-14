@@ -47,3 +47,24 @@ activityFactor <- activityNamesDF[allActDf$activity, 2]
 allDF <- cbind(activity=activityFactor, allDF)
 
 ### Appropriately labeling the data set with descriptive variable names
+
+# Already done.
+
+### From the data set in step 4, creates a second, independent tidy data set with the average
+### of each variable for each activity and each subject.
+
+# Adding subjects to the DF
+trainingSubDF <- read.table("UCI HAR Dataset/train/subject_train.txt")
+testSubDF <- read.table("UCI HAR Dataset/test/subject_test.txt")
+allSubDF <- rbind(trainingSubDF, testSubDF)
+allDF <- cbind(subject=allSubDF$V1, allDF)
+
+# In dplyr it would look like
+#
+# tidyDataSet = allDF %>%
+#               group_by(subject, activity) %>%
+#               summarise_each(funs(mean))
+
+tidyDataSet <- aggregate(by = list(Subject=allDF$subject, Activity=allDF$activity),
+                         x = allDF[, -c(1:2)],
+                         FUN = mean)
