@@ -133,3 +133,6 @@ tidyDataSet <- aggregate(by = list(Subject=allDF$subject, Activity=allDF$activit
 #
 # But since the whole script was made in "pure" R, I used aggregate()
 # to keep it in that way.
+
+# Writing the tidy data set to a file
+write.table(tidyDataSet, file = "tidy_data_set.txt", row.names = FALSE)
