@@ -20,17 +20,29 @@
 # above.
 
 # Before getting in the steps in itself is necessary to read the files of
-# interest from the study data set. The data frames with the content of the
-# files are:
+# interest from the study data set. The script will try to find them in the
+# working directory. If it doesn't find them, will ask permission to download
+# the data set.
+if(!file.exists("UCI HAR Dataset")){
+        message("Couldn't find the 'UCI HAR Dataset' directory")
+        userInput <- readline(prompt = "Download it? [y/n] ")
+        if(gsub("(^[[:space:]]+|[[:space:]]+$)", "", userInput) == 'y'){
+                download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",
+                              method = "curl", destfile = "dataset.zip")
+                unzip("dataset.zip")
+        }
+        else
+                stop("No data set to work")
+}
+
+# The data frames with the content of the files are:
 #
 # - trainingDF: the training set
 # - trainingActDF: to which activity the corresponding line in the training
 #   set refers
 # - trainingSubDF: to which volunteer the corresponding line in the training
 #   set refers
-if(!file.exists("UCI HAR Dataset")){
-        message("Couldn't find the 'UCI HAR Dataset' directory")
-}
+
 trainingDF <- read.table("./UCI HAR Dataset/train/X_train.txt")
 trainingActDF <- read.table("./UCI HAR Dataset/train/y_train.txt", col.names = "activity")
 trainingSubDF <- read.table("UCI HAR Dataset/train/subject_train.txt")
