@@ -6,7 +6,7 @@
 # The steps are:
 #
 # 1. Merge the training and the test sets to create one data set.
-# 2. Extract only the measurements on the mean and standard deviation for 
+# 2. Extract only the measurements on the mean and standard deviation for
 #    each measurement.
 # 3. Use descriptive activity names to name the activities in the data set
 # 4. Appropriately label the data set with descriptive variable names.
@@ -23,10 +23,10 @@
 # interest from the study data set. The script will try to find them in the
 # working directory. If it doesn't find them, will ask permission to download
 # the data set.
-if(!file.exists("UCI HAR Dataset")){
+if(!file.exists("./UCI HAR Dataset")){
         message("Couldn't find the 'UCI HAR Dataset' directory")
         userInput <- readline(prompt = "Download it? [y/n] ")
-        if(gsub("(^[[:space:]]+|[[:space:]]+$)", "", userInput) == 'y'){
+        if(gsub("(^[[:space:]]+|[[:space:]]+$)", "", userInput) == "y"){
                 download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",
                               method = "curl", destfile = "dataset.zip")
                 unzip("dataset.zip")
@@ -42,10 +42,9 @@ if(!file.exists("UCI HAR Dataset")){
 #   set refers
 # - trainingSubDF: to which volunteer the corresponding line in the training
 #   set refers
-
 trainingDF <- read.table("./UCI HAR Dataset/train/X_train.txt")
 trainingActDF <- read.table("./UCI HAR Dataset/train/y_train.txt", col.names = "activity")
-trainingSubDF <- read.table("UCI HAR Dataset/train/subject_train.txt")
+trainingSubDF <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
 # - testDF: the test set
 # - testActDF: to which activity the corresponding line in the test
@@ -54,7 +53,7 @@ trainingSubDF <- read.table("UCI HAR Dataset/train/subject_train.txt")
 #   set refers
 testDF <- read.table("./UCI HAR Dataset/test/X_test.txt")
 testActDF <- read.table("./UCI HAR Dataset/test/y_test.txt", col.names = "activity")
-testSubDF <- read.table("UCI HAR Dataset/test/subject_test.txt")
+testSubDF <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
 # - featuresDF: the complete list of variables names
 # - activityNamesDF: lists the 6 activities and their numbers (these are the
@@ -79,18 +78,18 @@ allActDf <- rbind(trainingActDF, testActDF)
 names(allDF) <- featuresDF[[2]]
 
 # What columns have means and standard deviations? (\\b is a regex boundary)
-colsMeansStd <- grep('\\bmean\\b|\\bstd\\b', names(allDF))
+colsMeansStd <- grep("\\bmean\\b|\\bstd\\b", names(allDF))
 
 # Keeping just these columns
 allDF <- allDF[colsMeansStd]
 
 # The names of these columns have some syntactically invalid characters.
 # They are swapped by a single dot below:
-names(allDF) <- gsub('\\(\\)', '', names(allDF))
+names(allDF) <- gsub("\\(\\)", "", names(allDF))
 names(allDF) <- make.names(names(allDF))
 
 # Some of them have the word "Body" duplicated as well
-names(allDF) <- gsub('BodyBody', 'Body', names(allDF))
+names(allDF) <- gsub("BodyBody", "Body", names(allDF))
 
 ### 3. Using descriptive activity names to name the activities in the data
 ###    set
