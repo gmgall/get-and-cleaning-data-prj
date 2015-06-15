@@ -84,6 +84,14 @@ colsMeansStd <- grep('\\bmean\\b|\\bstd\\b', names(allDF))
 # Keeping just these columns
 allDF <- allDF[colsMeansStd]
 
+# The names of these columns have some syntactically invalid characters.
+# They are swapped by a single dot below:
+names(allDF) <- gsub('\\(\\)', '', names(allDF))
+names(allDF) <- make.names(names(allDF))
+
+# Some of them have the word "Body" duplicated as well
+names(allDF) <- gsub('BodyBody', 'Body', names(allDF))
+
 ### 3. Using descriptive activity names to name the activities in the data
 ###    set
 
