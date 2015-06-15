@@ -78,8 +78,8 @@ allActDf <- rbind(trainingActDF, testActDF)
 # Setting columns names
 names(allDF) <- featuresDF[[2]]
 
-# What columns have means and standard deviations?
-colsMeansStd <- grep('mean|std', names(allDF))
+# What columns have means and standard deviations? (\\b is a regex boundary)
+colsMeansStd <- grep('\\bmean\\b|\\bstd\\b', names(allDF))
 
 # Keeping just these columns
 allDF <- allDF[colsMeansStd]
