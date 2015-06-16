@@ -42,7 +42,7 @@ if(!file.exists("./UCI HAR Dataset")){
 #   set refers
 # - trainingSubDF: to which volunteer the corresponding line in the training
 #   set refers
-trainingDF <- read.table("./UCI HAR Dataset/train/X_train.txt")
+trainingDF <- read.table("./UCI HAR Dataset/train/X_train.txt", colClasses = "numeric")
 trainingActDF <- read.table("./UCI HAR Dataset/train/y_train.txt", col.names = "activity")
 trainingSubDF <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
@@ -51,7 +51,7 @@ trainingSubDF <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 #   set refers
 # - testSubDF: to which volunteer the corresponding line in the test
 #   set refers
-testDF <- read.table("./UCI HAR Dataset/test/X_test.txt")
+testDF <- read.table("./UCI HAR Dataset/test/X_test.txt", colClasses = "numeric")
 testActDF <- read.table("./UCI HAR Dataset/test/y_test.txt", col.names = "activity")
 testSubDF <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
